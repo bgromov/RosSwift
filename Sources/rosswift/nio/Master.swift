@@ -13,9 +13,9 @@ import RosNetwork
 
 let threadGroup = MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)
 
-struct TopicInfo {
-    let name: String
-    let dataType: String
+public struct TopicInfo {
+    public let name: String
+    public let dataType: String
 }
 
 let xmlrpcVersion = "XMLRPC++ 0.7"
@@ -156,7 +156,7 @@ struct XMLRPCClient {
 
 
 
-final class Master {
+public final class Master {
 
     var masterHost = "127.0.0.1"
     var masterPort: UInt16 = 11311
@@ -363,7 +363,7 @@ final class Master {
 
     }
 
-    func getTopics(callerId: String) -> EventLoopFuture<[TopicInfo]> {
+    public func getTopics(callerId: String) -> EventLoopFuture<[TopicInfo]> {
         let args = XmlRpcValue(array: [XmlRpcValue(str: callerId), XmlRpcValue(str: "")])
         return execute(method: "getPublishedTopics", request: args).map({ (rpc) -> [TopicInfo] in
             return rpc.map { TopicInfo(name: $0[0].string, dataType: $0[1].string )}

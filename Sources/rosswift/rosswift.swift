@@ -76,7 +76,7 @@ public final class Ros: Hashable {
     let topicManager: TopicManager
     let connectionManager: ConnectionManager
     let xmlrpcManager: XMLRPCManager
-    let master: Master
+    public let master: Master
 
     let network: RosNetwork
     public let name: String
