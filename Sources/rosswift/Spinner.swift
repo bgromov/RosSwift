@@ -55,7 +55,7 @@ struct MultiThreadedSpinner: Spinner {
     }
 }
 
-final class AsyncSpinnner {
+public final class AsyncSpinner {
     private let mutex = DispatchQueue(label: "mutex")
     private var threads = [Thread]()
     private let threadCount: Int
@@ -63,7 +63,7 @@ final class AsyncSpinnner {
     private var running = NIOAtomic.makeAtomic(value: false)
     private let ros: Ros
 
-    init(ros: Ros, threadCount: Int, queue: CallbackQueue? = nil) {
+    public init(ros: Ros, threadCount: Int, queue: CallbackQueue? = nil) {
         self.callbackQueue = queue != nil ? queue! : ros.getGlobalCallbackQueue()
         self.threadCount = threadCount != 0 ? threadCount : System.coreCount
         self.ros = ros
@@ -73,7 +73,7 @@ final class AsyncSpinnner {
         stop()
     }
 
-    func start() {
+    public func start() {
         guard running.compareAndExchange(expected: false, desired: true) else {
             return
         }
@@ -92,7 +92,7 @@ final class AsyncSpinnner {
         }
     }
 
-    func stop() {
+    public func stop() {
         guard running.compareAndExchange(expected: true, desired: false) else {
             return
         }
